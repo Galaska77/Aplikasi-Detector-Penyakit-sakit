@@ -82,11 +82,12 @@ graph TD
 
 ### 📥 Direct Installation / Siap Pakai (Instalasi Langsung)
 Bagi pengguna umum atau praktisi kebun yang ingin langsung mencoba aplikasi tanpa perlu mengompilasi kode dari awal:
-1. Buka halaman [GitHub Releases](https://github.com/Galaska77/Aplikasi-Detector-Penyakit-sakit/releases) repositori ini.
-2. Unduh file **`sawit-detector-v1.0.0.zip`** versi terbaru.
-3. Ekstrak file zip ke komputer Anda.
-4. Jalankan **`start.bat`** (Windows) atau **`start.sh`** (Linux/macOS) untuk otomatis memeriksa dependencies dan menyalakan server lokal.
-5. Akses sistem di browser Anda: `http://localhost:5000`.
+1. **Unduh Paket Aplikasi:**
+   - [📦 Unduh Langsung sawit-detector-v1.0.0.zip](https://github.com/Galaska77/Aplikasi-Detector-Penyakit-sakit/raw/main/sawit-detector-v1.0.0.zip) *(Arsip lengkap siap pakai)*
+   - Atau melalui halaman [GitHub Releases / Tag v1.0.0](https://github.com/Galaska77/Aplikasi-Detector-Penyakit-sakit/releases)
+2. Ekstrak file zip ke komputer Anda.
+3. Jalankan **`start.bat`** (Windows) atau **`start.sh`** (Linux/macOS) untuk otomatis memeriksa dependencies dan menyalakan server lokal.
+4. Akses sistem di browser Anda: `http://localhost:5000`.
 
 ---
 
