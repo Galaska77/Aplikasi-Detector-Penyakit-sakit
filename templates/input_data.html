@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Data Gejala - Sistem Identifikasi Gejala Sawit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            border: none;
+        }
+        .form-check-input:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .form-check-input:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        .symptom-group {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .symptom-title {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('dashboard') }}">
+                <i class="fas fa-seedling me-2"></i>Sistem Sawit
+            </a>
+            <div class="navbar-nav ms-auto">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                        <i class="fas fa-user me-2"></i>{{ session.username }}
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                        </a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('history') }}">
+                            <i class="fas fa-history me-2"></i>Riwayat Analisis
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-microscope me-2"></i>Input Data Gejala Sawit
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Petunjuk:</strong> Centang gejala yang teramati pada tanaman sawit Anda. Data ini akan dianalisis menggunakan algoritma DBSCAN untuk mengidentifikasi pola penyakit.
+                        </div>
+
+                        <form method="POST" action="{{ url_for('process_data') }}">
+                            <!-- Gejala Daun -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-leaf me-2"></i>Gejala pada Daun
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(0, 12) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Gejala Batang -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-tree me-2"></i>Gejala pada Batang
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(12, 20) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Gejala Akar -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-root me-2"></i>Gejala pada Akar
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(20, 28) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Gejala Buah -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-apple-alt me-2"></i>Gejala pada Buah
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(28, 36) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Gejala Bunga -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-seedling me-2"></i>Gejala pada Bunga
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(36, 40) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <!-- Gejala Umum -->
+                            <div class="symptom-group">
+                                <h5 class="symptom-title">
+                                    <i class="fas fa-chart-line me-2"></i>Gejala Umum Tanaman
+                                </h5>
+                                <div class="row">
+                                    {% for i in range(40, 48) %}
+                                    <div class="col-md-6 col-lg-4 mb-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="{{ features[i] }}" id="{{ features[i] }}" value="1">
+                                            <label class="form-check-label" for="{{ features[i] }}">
+                                                <strong>{{ features[i].replace('_', ' ').title() }}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-success btn-submit">
+                                    <i class="fas fa-play me-2"></i>Analisis Data dengan DBSCAN
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

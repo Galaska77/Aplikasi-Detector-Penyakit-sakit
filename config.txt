@@ -1,0 +1,35 @@
+# Konfigurasi Database MySQL untuk Sistem Sawit DBSCAN
+
+# Pastikan MySQL sudah terinstall dan berjalan
+# Ubah konfigurasi berikut sesuai dengan setup MySQL Anda
+
+# Untuk XAMPP/Laragon (default):
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=
+MYSQL_DB=sawit_dbscan
+
+# Untuk MySQL standalone:
+# MYSQL_HOST=localhost
+# MYSQL_USER=your_username
+# MYSQL_PASSWORD=your_password
+# MYSQL_DB=sawit_dbscan
+
+# Langkah-langkah setup:
+# 1. Pastikan MySQL service berjalan
+# 2. Buat database 'sawit_dbscan' atau jalankan database.sql
+# 3. Update konfigurasi di app.py sesuai dengan setting di atas
+# 4. Jalankan aplikasi dengan: python app.py
+
+
+
+
+
+
+
+
+
+
+
+
+
